@@ -1,0 +1,27 @@
+name: 01-building-block
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+jobs:
+  echo-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Hello
+        run: echo "Hello, world!"
+      - name: Multi-line bash
+        run: |
+          echo "I am"
+          echo "a multi-line"
+          echo "script."
+  
+  echo-goodbye:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Failed step
+        run: echo "I will fail" && exit 1
+      - name: Echo Goodbye
+        run: echo "Goodbye, world!"
+
