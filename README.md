@@ -12,6 +12,7 @@ No command in this repository deploys resources automatically. Review and run th
 | `docker/runner/Dockerfile` | Custom GitHub Actions runner image. |
 | `deploy/arc-controller/values.yaml` | Helm values for the ARC controller. |
 | `deploy/arc-runner/` | Helm chart that creates the repository runner. |
+| `scripts/setup-runner.sh` | Recreates cert-manager, ARC, GHCR credentials, and the repository runner. |
 | `.env` | Local-only GitHub PAT source. This file is ignored by Git. |
 
 ## Prerequisites
@@ -50,6 +51,16 @@ test -n "$GITHUB_PAT"
 ```
 
 The `.env` file is ignored by Git. Do not add the PAT to Helm values, workflow files, Dockerfiles, or commits.
+
+## Recreate the runner
+
+After the runner image for the tag in `deploy/arc-runner/values.yaml` is available in GHCR, run the setup script from the repository root:
+
+```bash
+./scripts/setup-runner.sh
+```
+
+The script sources `.env` when `GITHUB_PAT` is not already set, uses Helm to create the required namespaces and releases, and creates or updates the runtime-only `ghcr-pull` secret. It changes the current Kubernetes cluster.
 
 ## 2. Build and publish the runner image
 
