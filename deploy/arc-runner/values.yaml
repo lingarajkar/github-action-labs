@@ -1,0 +1,13 @@
+runner:
+  name: github-action-labs
+  namespace: arc-runners
+  repository: lingarajkar/github-action-labs
+  replicas: 1
+  labels:
+    - github-action-labs
+  image:
+    repository: ghcr.io/lingarajkar/github-action-labs-runner
+    tag: v1.0.0
+    pullPolicy: IfNotPresent
+  imagePullSecrets:
+    - name: ghcr-pull

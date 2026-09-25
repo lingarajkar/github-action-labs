@@ -1,0 +1,16 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: {{ .Values.runner.name }}
+  namespace: {{ .Values.runner.namespace }}
+spec:
+  replicas: {{ .Values.runner.replicas }}
+  template:
+    spec:
+      repository: {{ .Values.runner.repository }}
+      image: {{ .Values.runner.image.repository }}:{{ .Values.runner.image.tag }}
+      imagePullPolicy: {{ .Values.runner.image.pullPolicy }}
+      imagePullSecrets:
+    {{ toYaml .Values.runner.imagePullSecrets | indent 8 }}
+      labels:
+{{ toYaml .Values.runner.labels | indent 8 }}
