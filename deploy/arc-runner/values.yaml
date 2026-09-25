@@ -7,7 +7,7 @@ runner:
     - github-action-labs
   image:
     repository: ghcr.io/lingarajkar/github-action-labs-runner
-    tag: v1.0.0
+    tag: v1.0.1
     pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-pull
