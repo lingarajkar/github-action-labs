@@ -80,7 +80,7 @@ git tag v1.0.1
 git push origin v1.0.1
 ```
 
-Alternatively, run **Publish runner image** from the GitHub Actions tab and enter an unused version such as `v1.0.1`. After it succeeds, update `runner.image.tag` in `deploy/arc-runner/values.yaml` to the same version before upgrading the runner chart.
+Alternatively, run **Publish runner image** from the GitHub Actions tab and enter an unused version such as `v1.0.1`. After the image is published, the workflow updates `runner.image.tag` on `main` and commits the deployment configuration automatically.
 
 ## 3. Add the ARC Helm repository
 
@@ -150,6 +150,20 @@ kubectl get pods --namespace arc-systems
 helm list --namespace arc-systems
 ```
 
+### Chart download timeout fallback
+
+If Helm times out downloading the ARC chart from GitHub Releases, download the version from the repository index with retries and install the local archive instead:
+
+```bash
+mkdir -p .helm-cache
+curl --fail --location --retry 5 --retry-all-errors \
+	--connect-timeout 30 --max-time 600 \
+	--output .helm-cache/actions-runner-controller-0.23.7.tgz \
+	https://github.com/actions/actions-runner-controller/releases/download/actions-runner-controller-0.23.7/actions-runner-controller-0.23.7.tgz
+```
+
+Replace `actions-runner-controller/actions-runner-controller` in the installation command with `.helm-cache/actions-runner-controller-0.23.7.tgz`.
+
 ## 6. Install the repository runner
 
 The custom runner image is private in GHCR. Create the `ghcr-pull` secret from a token with package read access before installing the chart:
@@ -200,7 +214,36 @@ kubectl get pods --namespace arc-runners --watch
 kubectl logs --namespace arc-systems deployment/arc-actions-runner-controller
 ```
 
-## 8. Maintain the runner
+## 8. Troubleshooting
+
+If the ARC controller crash-loops with an empty or invalid private-key error, confirm `GITHUB_PAT` is set in the current terminal, update the Helm release with the required `authSecret.github_token` value, then restart the controller:
+
+```bash
+test -n "$GITHUB_PAT"
+token_file=$(mktemp)
+trap 'rm -f "$token_file"' EXIT
+printf '%s' "$GITHUB_PAT" > "$token_file"
+
+helm upgrade arc actions-runner-controller/actions-runner-controller \
+	--namespace arc-systems \
+	--values deploy/arc-controller/values.yaml \
+	--set-file authSecret.github_token="$token_file"
+
+kubectl rollout restart deployment/arc-actions-runner-controller \
+	--namespace arc-systems
+kubectl rollout status deployment/arc-actions-runner-controller \
+	--namespace arc-systems --timeout=2m
+```
+
+If the runner pod is in `ImagePullBackOff`, confirm that the image was pushed and that the `ghcr-pull` secret exists in `arc-runners`:
+
+```bash
+docker push ghcr.io/lingarajkar/github-action-labs-runner:v1.0.0
+kubectl get secret ghcr-pull --namespace arc-runners
+kubectl get pods --namespace arc-runners
+```
+
+## 9. Maintain the runner
 
 Update `deploy/arc-runner/values.yaml` to change the repository, image, runner label, or steady-state runner count. Apply a reviewed change with:
 
@@ -217,7 +260,7 @@ Before updating the controller chart, review available versions:
 helm search repo actions-runner-controller/actions-runner-controller --versions
 ```
 
-## 9. Remove runner resources
+## 10. Remove runner resources
 
 To remove the repository runner but retain the cluster and ARC controller:
 
