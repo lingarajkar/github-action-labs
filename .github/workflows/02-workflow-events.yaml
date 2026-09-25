@@ -11,7 +11,7 @@ on:
 
 jobs:
     echo:
-        runs-on: ubuntu-latest
+        runs-on: github-action-labs
         steps:
           - name: Show the trigger
             run: echo "Triggered by $GITHUB_EVENT_NAME"

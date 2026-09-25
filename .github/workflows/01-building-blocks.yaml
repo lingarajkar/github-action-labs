@@ -7,7 +7,7 @@ on:
 
 jobs:
   echo-hello:
-    runs-on: ubuntu-latest
+    runs-on: github-action-labs
     steps:
       - name: Echo Hello
         run: echo "Hello, world!"
@@ -18,7 +18,7 @@ jobs:
           echo "script."
   
   echo-goodbye:
-    runs-on: ubuntu-latest
+    runs-on: github-action-labs
     steps:
       - name: Failed step
         run: echo "I will fail" && exit 1
