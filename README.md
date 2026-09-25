@@ -58,16 +58,18 @@ The runner image extends `summerwind/actions-runner` with `ca-certificates`, `cu
 Authenticate Docker to GHCR, then build and publish the image:
 
 ```bash
+IMAGE_TAG=v1.0.0
+
 printf '%s' "$GITHUB_PAT" | docker login ghcr.io -u lingarajkar --password-stdin
 
 docker build \
-	--tag ghcr.io/lingarajkar/github-action-labs-runner:v1.0.0 \
+	--tag ghcr.io/lingarajkar/github-action-labs-runner:"$IMAGE_TAG" \
 	docker/runner
 
-docker push ghcr.io/lingarajkar/github-action-labs-runner:v1.0.0
+docker push ghcr.io/lingarajkar/github-action-labs-runner:"$IMAGE_TAG"
 ```
 
-The chart is pinned to `v1.0.0` in `deploy/arc-runner/values.yaml`. For every image change, publish a new tag and update `runner.image.tag` before upgrading the runner chart.
+The chart image tag is configured in `deploy/arc-runner/values.yaml`. Use a new immutable tag for every image change.
 
 ### Publish with GitHub Actions
 
@@ -238,16 +240,17 @@ kubectl rollout status deployment/arc-actions-runner-controller \
 If the runner pod is in `ImagePullBackOff`, confirm that the image was pushed and that the `ghcr-pull` secret exists in `arc-runners`:
 
 ```bash
-docker push ghcr.io/lingarajkar/github-action-labs-runner:v1.0.0
+docker push ghcr.io/lingarajkar/github-action-labs-runner:<image-tag>
 kubectl get secret ghcr-pull --namespace arc-runners
 kubectl get pods --namespace arc-runners
 ```
 
 ## 9. Maintain the runner
 
-Update `deploy/arc-runner/values.yaml` to change the repository, image, runner label, or steady-state runner count. Apply a reviewed change with:
+Update `deploy/arc-runner/values.yaml` to change the repository, image, runner label, or steady-state runner count. The publishing workflow updates `runner.image.tag` automatically on `main`; pull that commit before applying the new image to the cluster:
 
 ```bash
+git pull --ff-only
 helm lint deploy/arc-runner
 helm upgrade github-action-labs-runner deploy/arc-runner \
 	--namespace arc-runners \
