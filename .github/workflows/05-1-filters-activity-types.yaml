@@ -14,4 +14,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Echo Pull Request Event and activity types
-              run: echo "Running whenever a PR is opened or synchronized AND base branch is main"
+              run: echo "Running whenever a PR is opened or synchronized or Labeled AND base branch is main"
