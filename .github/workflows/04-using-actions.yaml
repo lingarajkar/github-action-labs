@@ -1,0 +1,30 @@
+name: 04-using-actions
+
+on:
+    workflow_dispatch: {}
+
+jobs:
+    Checkout:
+        runs-on: github-action-labs
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v7
+    Printfolder:
+        runs-on: github-action-labs
+        steps:
+          - name: Print current folder
+            run: pwd
+    Setup-node:
+        runs-on: github-action-labs
+        steps:
+          - name: Setup Node.js
+            uses: actions/setup-node@v6
+            with:
+              node-version: '24.x'
+          - name: Verify Node.js installation
+            run: node -v
+          - name: Install Dependencies
+            run: |
+                cd 04-using-actions/react-app
+                npm ci
+                npm run test
