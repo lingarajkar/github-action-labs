@@ -6,6 +6,9 @@ on:
 jobs:
     Checkout:
         runs-on: github-action-labs
+        defaults:
+          run:
+            working-directory: ./04-using-actions/react-app
         steps:
           - name: Checkout repository
             uses: actions/checkout@v7
@@ -19,6 +22,5 @@ jobs:
             run: node -v
           - name: Install Dependencies
             run: |
-                cd ./04-using-actions/react-app
                 npm ci
                 npm run test
