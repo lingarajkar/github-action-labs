@@ -9,9 +9,6 @@ jobs:
         steps:
           - name: Checkout repository
             uses: actions/checkout@v7
-    Printfolder:
-        runs-on: github-action-labs
-        steps:
           - name: Print current folder
             run: pwd
           - name: Setup Node.js
