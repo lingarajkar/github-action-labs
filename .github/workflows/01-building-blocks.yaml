@@ -13,7 +13,7 @@ jobs:
           echo "I am"
           echo "a multi-line"
           echo "script."
-  
+
   echo-goodbye:
     runs-on: github-action-labs
     steps:
@@ -21,4 +21,3 @@ jobs:
         run: echo "I will fail" && exit 1
       - name: Echo Goodbye
         run: echo "Goodbye, world!"
-
