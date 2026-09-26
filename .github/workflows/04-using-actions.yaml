@@ -14,9 +14,6 @@ jobs:
         steps:
           - name: Print current folder
             run: pwd
-    Setup-node:
-        runs-on: github-action-labs
-        steps:
           - name: Setup Node.js
             uses: actions/setup-node@v6
             with:
