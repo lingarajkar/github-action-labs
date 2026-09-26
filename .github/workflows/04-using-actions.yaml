@@ -1,6 +1,13 @@
 name: 04-using-actions
 
 on:
+    push:
+        branches:
+            - main
+        paths:
+            - '04-using-actions/react-app/**'
+        paths-ignore:
+            - 'README.md'
     workflow_dispatch: {}
 
 jobs:
