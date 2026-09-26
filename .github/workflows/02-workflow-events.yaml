@@ -1,12 +1,7 @@
 name: 02-workflow-events
 
-on: 
-    pull_request:
-      branches:
-        - main
+on:
     workflow_dispatch: {}
-    schedule:
-      - cron: '30 20 * * *' 
 
 
 jobs:

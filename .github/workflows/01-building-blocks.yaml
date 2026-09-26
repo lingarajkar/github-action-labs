@@ -1,8 +1,5 @@
 name: 01-building-block
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch: {}
 
 jobs:
