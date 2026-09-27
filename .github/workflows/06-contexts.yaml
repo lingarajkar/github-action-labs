@@ -1,9 +1,6 @@
 name: 06 - Contexts
 
 on:
-    push:
-        branches:
-            - main
     workflow_dispatch: {}
 
 env:
