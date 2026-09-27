@@ -1,10 +1,5 @@
 name: 07 - Using Expressions
-run-name: |
-    if [ ${{ inputs.debug == true }} ] then
-        echo "07 - Using Expressions | DEBUG - ON"
-    else
-        echo "07 - Using Expressions | DEBUG - OFF"
-    fi
+run-name: 07 - Using Expressions | DEBUG - ${{ inputs.debug && 'ON' || 'OFF' }}
 on:
     push:
     workflow_dispatch:
