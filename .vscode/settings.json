@@ -1,4 +1,6 @@
 {
+  "audioCues.enabled": "off",
+  "audioCues.volume": 0,
   "files.associations": {
     "deploy/arc-runner/templates/*.yaml": "helm"
   }
