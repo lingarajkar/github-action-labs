@@ -18,13 +18,15 @@ on:
 
 
 env:
-    MY_ENV: ${{ vars.MY_VAR }}
+    MY_ENV: 'Workflow'
 
 run-name: 06 - Contexts | DEBUG - ${{ inputs.debug }}
 
 jobs:
     echo-data:
         runs-on: ubuntu-latest
+        env:
+            MY_ENV: 'Job'
         steps:
             - name: Display Information
               run: |
@@ -34,5 +36,9 @@ jobs:
                 echo "Actor: ${{ github.actor }}"
                 echo "Workflow: ${{ github.workflow}} Run ID: ${{ github.run_id }} Run number: ${{ github.run_number }}"
             - name: Retrieve Variable
+              env:
+                MY_ENV: 'Step'
               run: |
-                echo "My Variable: ${{ env.MY_ENV }}"
+                echo "My Variable: ${{ vars.MY_VAR }}"
+                echo "My Env: ${{ env.MY_ENV }}"
+                echo "My Secret: ${{ secrets.PASSWORD }}"
