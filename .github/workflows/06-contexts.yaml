@@ -8,6 +8,14 @@ on:
                 type: boolean
                 required: true
                 default: false
+            select:
+                type: choice
+                options:
+                    - 1
+                    - 2
+                    - 3
+                default: '1'
+
 
 env:
     MY_ENV: ${{ vars.MY_VAR }}
