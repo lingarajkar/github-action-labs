@@ -1,0 +1,15 @@
+name: 05-2-filters-activity-types
+
+on:
+    pull_request:
+        branches:
+            - main
+        types:
+            - closed
+
+jobs:
+    echo:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Echo Pull Request Event and activity types
+              run: echo "Running whenever a PR is closed"
