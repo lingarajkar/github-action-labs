@@ -1,6 +1,10 @@
 {
   "audioCues.enabled": "off",
   "audioCues.volume": 0,
+  "editor.quickSuggestions": false,
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.inlineSuggest.enabled": false,
+  "editor.wordBasedSuggestions": "off",
   "files.associations": {
     "deploy/arc-runner/templates/*.yaml": "helm"
   }

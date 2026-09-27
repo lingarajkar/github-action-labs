@@ -5,8 +5,9 @@ on:
         inputs:
             debug:
                 description: 'Enable debug mode'
+                type: boolean
                 required: true
-                default: 'false'
+                default: false
 
 env:
     MY_ENV: ${{ vars.MY_VAR }}
