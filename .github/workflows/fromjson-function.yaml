@@ -9,4 +9,11 @@ jobs:
         steps:
             - name: echo
               if: fromJSON(vars.PROD_VAR) == false
-              run: echo "Hello"
+              run: exit 1
+
+    status-check:
+        runs-on: ubuntu-latest
+        if: failure()
+        steps:
+            - name: status-check
+              run: echo "Got exit 1 status"
