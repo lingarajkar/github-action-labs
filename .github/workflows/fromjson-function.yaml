@@ -8,5 +8,5 @@ jobs:
         environment: PROD
         steps:
             - name: echo
-              if: vars.PROD_VAR == false
+              if: fromJSON(vars.PROD_VAR) == false
               run: echo "Hello"
