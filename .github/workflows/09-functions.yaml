@@ -18,18 +18,20 @@ jobs:
             - name: 'I will execute'
               if: failure()
               run: echo "I will print if any previous step fails."
-            - name: 'I will execute'
+            - name: 'I will execute except when cancelled'
               if: ${{ !cancelled() }}
               run: echo "I will always print, except when the workflow is cancelled."
             - name: 'I will execute when cancelled'
               if: cancelled()
               run: echo "I will always print, when the workflow is cancelled."
             - name: 'Print PR title'
+              if: always()
               run: echo "${{ github.event.pull_request.title }}"
             - name: 'Print PR labels'
+              if: always()
               run: echo "${{ toJSON(github.event.pull_request.labels) }}"
             - name: 'Bug step'
-              if: ${{ contains(github.event.pull_request.title, 'fix') }}
+              if: ${{ always() && contains(github.event.pull_request.title, 'fix') }}
               run: echo "I am a bug fix"
             - name: 'Sleep for 20 seconds'
               run: sleep 20
