@@ -18,6 +18,8 @@ jobs:
             - name: 'I will execute'
               if: failure()
               run: echo "I will print if any previous step fails."
+            - name: Wait for cancellation
+              run: sleep 300
             - name: 'I will execute except when cancelled'
               if: ${{ !cancelled() }}
               run: echo "I will always print, except when the workflow is cancelled."
