@@ -31,7 +31,7 @@ jobs:
               if: always()
               run: echo "${{ toJSON(github.event.pull_request.labels) }}"
             - name: 'Bug step'
-              if: ${{ contains(github.event.pull_request.title, 'fix') }}
+              if: ${{ always() && contains(github.event.pull_request.title, 'fix') }}
               run: echo "I am a bug fix"
             - name: 'Sleep for 20 seconds'
               run: sleep 20
