@@ -3,9 +3,10 @@ name: from json workflow
 on: push
 
 jobs:
-    runs-on: ubuntu-latest
-    environment: PROD
-    steps:
-        - name: echo
-          if: ${{ vars.PROD_VAR == false }}
-          run: echo "Hello"
+    echo:
+        runs-on: ubuntu-latest
+        environment: PROD
+        steps:
+            - name: echo
+              if: vars.PROD_VAR == false
+              run: echo "Hello"
