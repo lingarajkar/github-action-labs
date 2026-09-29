@@ -10,16 +10,16 @@ jobs:
     echo1:
         runs-on: ubuntu-latest
         steps:
-            - name: 'Failing step'
-              run: sleep 60 && exit 1000
+            - name: Wait for cancellation
+              run: sleep 300
+            # - name: 'Failing step'
+            #   run: sleep 60 && exit 1000
             - name: 'I will be skipped'
               if: success()
               run: echo "I will print if previous steps succeed."
             - name: 'I will execute'
               if: failure()
               run: echo "I will print if any previous step fails."
-            - name: Wait for cancellation
-              run: sleep 300
             - name: 'I will execute except when cancelled'
               if: ${{ !cancelled() }}
               run: echo "I will always print, except when the workflow is cancelled."
