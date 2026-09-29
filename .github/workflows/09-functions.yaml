@@ -10,7 +10,7 @@ jobs:
     echo1:
         runs-on: ubuntu-latest
         steps:
-            - name: Wait for cancellation
+            - name: Wait for cancellation #click Cancel workflow while that step is running to verify the behavious of #4 & #5
               run: sleep 300
             # - name: 'Failing step'
             #   run: sleep 60 && exit 1000
