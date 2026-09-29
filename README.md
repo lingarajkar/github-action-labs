@@ -1,4 +1,4 @@
-# GitHub Actions Labs
+# GitHub Actions Labs Repository
 
 This repository contains GitHub Actions examples and the source-controlled configuration for a repository-scoped self-hosted runner on Kubernetes. The runner is managed by Actions Runner Controller (ARC) and is available to `lingarajkar/github-action-labs` with the `github-action-labs` label.
 
