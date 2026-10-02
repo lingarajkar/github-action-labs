@@ -27,6 +27,7 @@ jobs:
                 echo "Status=${{ inputs.build-status }}" >> "$GITHUB_OUTPUT"
                 echo "output1=value1" >> "$GITHUB_OUTPUT"
                 echo "output2=value2" >> "$GITHUB_OUTPUT"
+                echo "mistake=true" > "$GITHUB_OUTPUT"
             - name: 'Post Print Github Output'
               run: |
                 cat $GITHUB_OUTPUT
