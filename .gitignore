@@ -1,2 +1,4 @@
 .env
 .vscode/
+04-using-actions/react-app/node_modules
+13-caching/react-app/node_modules
